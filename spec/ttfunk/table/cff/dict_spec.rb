@@ -40,6 +40,12 @@ RSpec.describe TTFunk::Table::Cff::Dict do
 
     # Float with a missing exponent, operator 1
     [0x1E, 0x0A, 0x1F, 0x01] => { 1 => [TTFunk::SciForm.new(0.1, 0)] },
+
+    # Test case for 0.00001 (small float)
+    [0x1E, 0x0A, 0x00, 0x00, 0x1F, 0x0A] => { 10 => [0.00001] },
+
+    # Test case for 1_000_000_000_000_000.0 (large float)
+    [0x1E, 0x10, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xA0, 0xFF, 0x0A] => { 10 => [1_000_000_000_000_000.0] },
   }
 
   test_cases.each_with_index do |(bytes, decoded_values), idx|

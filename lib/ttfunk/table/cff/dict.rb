@@ -141,7 +141,11 @@ module TTFunk
         def encode_significand(sig)
           if defined?(BigDecimal) && sig.is_a?(BigDecimal)
             sig.to_s('F')
+          elsif defined?(BigDecimal) && sig.is_a?(Float)
+            BigDecimal(sig).to_s('F') # BigDecimal(0.00001).to_s('F') => "0.00001"
           else
+            # Without BigDecimal it might still be 0.00001.to_s => "1.0e-05"
+            # breaking out of the loop on ?e and return 1.0
             sig.to_s
           end.each_char.with_object([]) do |char, ret|
             case char
