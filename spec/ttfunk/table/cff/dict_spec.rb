@@ -109,7 +109,7 @@ RSpec.describe TTFunk::Table::Cff::Dict do
 
   begin
     require('bigdecimal')
-  rescue StandardError
+  rescue LoadError
     # ignore
   end
   if defined?(BigDecimal)
